@@ -54,7 +54,7 @@ const AddService = ({ editService, restrictPermission, setEditService }) => {
                 setEditService({});
                 return toast.error("You haven't changed anything!");
             }
-            axios.patch(`http://localhost:5000/update/${editService._id}`, serviceInfo)
+            axios.patch(`https://desolate-eyrie-39121.herokuapp.com/update/${editService._id}`, serviceInfo)
                 .then(res => {
                     toast.dismiss(loading);
                     if (res.data) {
@@ -72,7 +72,7 @@ const AddService = ({ editService, restrictPermission, setEditService }) => {
             return;
         }
 
-        axios.post('http://localhost:5000/addService', serviceInfo)
+        axios.post('https://desolate-eyrie-39121.herokuapp.com/addService', serviceInfo)
             .then(res => {
                 toast.dismiss(loading);
                 if (res.data) {

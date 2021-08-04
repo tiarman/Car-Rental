@@ -11,7 +11,7 @@ const OrderList = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/orders?email=${email}`)
+        axios.get(`https://desolate-eyrie-39121.herokuapp.com/orders?email=${email}`)
             .then(res => {
                 setOrders(res.data);
                 setLoading(false);
@@ -31,7 +31,7 @@ const OrderList = () => {
 
         const modifiedStatus = { id, status }
 
-        axios.patch('http://localhost:5000/updateOrderStatus', modifiedStatus)
+        axios.patch('https://desolate-eyrie-39121.herokuapp.com/updateOrderStatus', modifiedStatus)
             .then(res => res.data && toast.success(`Set to ${status}`))
             .catch(error => toast.error(error.message));
     }

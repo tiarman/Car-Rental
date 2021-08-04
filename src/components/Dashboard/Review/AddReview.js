@@ -16,7 +16,7 @@ const AddReview = ({ review, setReview, edit, setEdit }) => {
         data.email = email;
 
         if (edit) {
-            axios.patch(`http://localhost:5000/updateReview/${review._id}`, data)
+            axios.patch(`https://desolate-eyrie-39121.herokuapp.com/updateReview/${review._id}`, data)
                 .then(res => {
                     toast.dismiss(loading);
                     if (
@@ -40,7 +40,7 @@ const AddReview = ({ review, setReview, edit, setEdit }) => {
             return;
         }
 
-        axios.post('http://localhost:5000/addReview', data)
+        axios.post('https://desolate-eyrie-39121.herokuapp.com/addReview', data)
             .then(res => {
                 toast.dismiss(loading);
                 if (res.data) {

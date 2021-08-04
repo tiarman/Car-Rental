@@ -68,7 +68,7 @@ const PaymentForm = ({ serviceInfo }) => {
             orderTime: new Date().toLocaleString()
         };
 
-        axios.post('http://localhost:5000/addOrder', orderDetails)
+        axios.post('https://desolate-eyrie-39121.herokuapp.com/addOrder', orderDetails)
             .then(res => {
                 toast.dismiss(loading);
                 if (res.data) {

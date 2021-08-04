@@ -16,7 +16,7 @@ const ManageService = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/services')
+        axios.get('https://desolate-eyrie-39121.herokuapp.com/services')
             .then(res => {
                 setServices(res.data);
                 setLoading(false);
@@ -53,7 +53,7 @@ const ManageService = () => {
             if (wantDelete) {
                 const loading = toast.loading('Deleting...Please wait!');
                 const removedServices = services.filter(item => item._id !== id);
-                axios.delete(`http://localhost:5000/delete/${id}`)
+                axios.delete(`https://desolate-eyrie-39121.herokuapp.com/delete/${id}`)
                     .then(res => {
                         toast.dismiss(loading);
                         if (res.data) {

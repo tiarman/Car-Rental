@@ -12,7 +12,7 @@ const BookingList = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/orders?email=${email}`)
+        axios.get(`https://desolate-eyrie-39121.herokuapp.com/orders?email=${email}`)
             .then(res => {
                 setOrders(res.data);
                 setLoading(false);

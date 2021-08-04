@@ -47,7 +47,7 @@ const Dashboard = ({ adminLoading }) => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/reviews?email=${email}`)
+        axios.get(`https://desolate-eyrie-39121.herokuapp.com/reviews?email=${email}`)
             .then(res => {
                 setReview(res.data);
                 setLoadingReview(false);
