@@ -1,24 +1,55 @@
-import logo from './logo.svg';
+import axios from "axios";
+import { createContext, lazy, Suspense, useEffect, useState } from "react";
+import toast, { Toaster } from 'react-hot-toast';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch
+} from "react-router-dom";
 import './App.css';
+import LoadingSpinner from "./components/Home/LoadingSpinner/LoadingSpinner";
+import { getDecodedUser } from "./components/Login/LoginManager";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+const Home = lazy(() => import('./pages/Home'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Login = lazy(() => import('./pages/Login'));
+
+export const UserContext = createContext();
 
 function App() {
+  const [loggedInUser, setLoggedInUser] = useState(getDecodedUser());
+  const [selectedService, setSelectedService] = useState([]);
+  const [adminLoading, setAdminLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    axios.get(`http://localhost:5000/isAdmin?email=${loggedInUser?.email}`)
+      .then(res => {
+        setIsAdmin(res.data);
+        setAdminLoading(false);
+      })
+      .catch(error => toast.error(error.message))
+  }, [loggedInUser?.email]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserContext.Provider value={{ loggedInUser, setLoggedInUser, isAdmin, selectedService, setSelectedService }}>
+      <Router>
+        <Toaster />
+        <Suspense fallback={<LoadingSpinner />}>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <PrivateRoute path="/dashboard/:panel">
+              <Dashboard adminLoading={adminLoading} />
+            </PrivateRoute>
+            <Route path="/login">
+              <Login />
+            </Route>
+          </Switch>
+        </Suspense>
+      </Router>
+    </UserContext.Provider>
   );
 }
 
